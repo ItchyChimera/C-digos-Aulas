@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VÉRSE - Moda & Estilo</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #0c0c0c;
+            color: #f5f1e8;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(12, 12, 12, 0.88);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid #242424;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 700;
+            letter-spacing: 5px;
+        }
+
+        .menu {
+            display: flex;
+            gap: 35px;
+        }
+
+        .menu a {
+            color: #aaa;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .menu a:hover {
+            color: #d6b36a;
+        }
+
+        .acoes {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .botao-pesquisa,
+        .botao-carrinho {
+            background: transparent;
+            border: 0;
+            color: white;
+            cursor: pointer;
+            font-size: 22px;
+        }
+
+        .botao-carrinho {
+            position: relative;
+        }
+
+        #contador {
+            position: absolute;
+            top: -8px;
+            right: -9px;
+            width: 19px;
+            height: 19px;
+            border-radius: 50%;
+            background: #d6b36a;
+            color: #111;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .barra-pesquisa {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            padding: 20px 7%;
+            background: #151515;
+            display: none;
+            z-index: 999;
+            border-bottom: 1px solid #2b2b2b;
+        }
+
+        .barra-pesquisa.ativa {
+            display: flex;
+        }
+
+        .barra-pesquisa input {
+            flex: 1;
+            padding: 15px;
+            background: #222;
+            border: 1px solid #333;
+            color: white;
+            outline: none;
+        }
+
+        .barra-pesquisa button {
+            width: 50px;
+            border: 0;
+            background: #d6b36a;
+            cursor: pointer;
+        }
+
+        .hero {
+            min-height: 100vh;
+            padding: 120px 7% 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .hero-conteudo {
+            max-width: 600px;
+        }
+
+        .pequeno-titulo {
+            color: #d6b36a;
+            font-size: 12px;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(55px, 7vw, 95px);
+            line-height: 0.95;
+            font-weight: 500;
+        }
+
+        .hero h1 span {
+            color: #d6b36a;
+        }
+
+        .hero-conteudo > p:not(.pequeno-titulo) {
+            color: #999;
+            max-width: 450px;
+            margin: 30px 0;
+            line-height: 1.8;
+        }
+
+        .botao-principal {
+            display: inline-block;
+            padding: 16px 28px;
+            background: #d6b36a;
+            color: #111;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .botao-principal:hover {
+            transform: translateY(-3px);
+            background: #ead08f;
+        }
+
+        .hero-imagem {
+            height: 620px;
+            overflow: hidden;
+            background: #171717;
+        }
+
+        .hero-imagem img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .categorias {
+            padding: 55px 7%;
+            border-top: 1px solid #242424;
+            border-bottom: 1px solid #242424;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .categorias div {
+            border-right: 1px solid #292929;
+            padding-right: 30px;
+        }
+
+        .categorias div:last-child {
+            border: 0;
+        }
+
+        .categorias span {
+            color: #d6b36a;
+            font-size: 12px;
+        }
+
+        .categorias h3 {
+            margin: 10px 0;
+        }
+
+        .categorias p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .produtos {
+            padding: 110px 7%;
+        }
+
+        .titulo-secao {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 45px;
+        }
+
+        .titulo-secao p {
+            color: #d6b36a;
+            letter-spacing: 3px;
+            font-size: 12px;
+        }
+
+        .titulo-secao h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        .filtros {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filtro {
+            background: transparent;
+            border: 1px solid #333;
+            color: #aaa;
+            padding: 10px 17px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .filtro:hover,
+        .filtro.ativo {
+            background: #d6b36a;
+            color: #111;
+            border-color: #d6b36a;
+        }
+
+        .lista-produtos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .produto {
+            min-width: 0;
+        }
+
+        .imagem-produto {
+            height: 430px;
+            position: relative;
+            overflow: hidden;
+            background: #181818;
+        }
+
+        .imagem-produto img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .produto:hover .imagem-produto img {
+            transform: scale(1.05);
+        }
+
+        .tag {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 2;
+            background: #d6b36a;
+            color: #111;
+            padding: 7px 12px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .informacoes-produto {
+            padding: 18px 0;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .informacoes-produto h3 {
+            font-size: 16px;
+            margin-top: 7px;
+        }
+
+        .informacoes-produto strong {
+            white-space: nowrap;
+            color: #d6b36a;
+        }
+
+        .categoria {
+            color: #777;
+            font-size: 10px;
+            letter-spacing: 2px;
+        }
+
+        .adicionar {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #333;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .adicionar:hover {
+            background: #d6b36a;
+            color: #111;
+            border-color: #d6b36a;
+        }
+
+        .banner {
+            min-height: 500px;
+            margin: 0 7% 110px;
+            padding: 60px;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(90deg, rgba(0,0,0,0.9), rgba(0,0,0,0.25)),
+                url("https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1400&q=80") center/cover;
+        }
+
+        .banner p {
+            color: #d6b36a;
+            font-size: 12px;
+            letter-spacing: 3px;
+        }
+
+        .banner h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 55px;
+            font-weight: 500;
+            margin: 15px 0 30px;
+        }
+
+        .banner a {
+            display: inline-block;
+            border-bottom: 1px solid #d6b36a;
+            padding-bottom: 7px;
+            color: #d6b36a;
+        }
+
+        .sobre {
+            padding: 100px 7%;
+            border-top: 1px solid #242424;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+        }
+
+        .sobre h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 55px;
+            font-weight: 500;
+        }
+
+        .sobre > p {
+            color: #888;
+            line-height: 2;
+            align-self: center;
+            max-width: 550px;
+        }
+
+        .newsletter {
+            padding: 100px 7%;
+            text-align: center;
+            background: #151515;
+        }
+
+        .newsletter > p {
+            color: #d6b36a;
+            font-size: 12px;
+            letter-spacing: 3px;
+        }
+
+        .newsletter h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 500;
+            margin: 15px 0 35px;
+        }
+
+        .newsletter form {
+            max-width: 550px;
+            margin: auto;
+            display: flex;
+        }
+
+        .newsletter input {
+            flex: 1;
+            padding: 16px;
+            border: 1px solid #333;
+            background: #0c0c0c;
+            color: white;
+            outline: none;
+        }
+
+        .newsletter button {
+            padding: 0 25px;
+            border: 0;
+            background: #d6b36a;
+            color: #111;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        footer {
+            padding: 60px 7%;
+            border-top: 1px solid #242424;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+        }
+
+        footer h2 {
+            letter-spacing: 4px;
+        }
+
+        footer p {
+            color: #777;
+            margin-top: 10px;
+        }
+
+        .redes {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            color: #aaa;
+        }
+
+        .redes a:hover {
+            color: #d6b36a;
+        }
+
+        .copyright {
+            text-align: right;
+        }
+
+        .carrinho-fundo {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
+            z-index: 1999;
+        }
+
+        .carrinho-fundo.aberto {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .carrinho {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 420px;
+            max-width: 100%;
+            height: 100vh;
+            background: #111;
+            z-index: 2000;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            transition: 0.4s;
+            border-left: 1px solid #292929;
+        }
+
+        .carrinho.aberto {
+            right: 0;
+        }
+
+        .cabecalho-carrinho {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #292929;
+        }
+
+        .cabecalho-carrinho p {
+            color: #d6b36a;
+            font-size: 10px;
+            letter-spacing: 2px;
+        }
+
+        .cabecalho-carrinho h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 35px;
+            font-weight: 500;
+            margin-top: 5px;
+        }
+
+        .cabecalho-carrinho button {
+            border: 0;
+            background: transparent;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .itens-carrinho {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .carrinho-vazio {
+            color: #777;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .item-carrinho {
+            padding: 15px 0;
+            border-bottom: 1px solid #292929;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .item-carrinho h3 {
+            font-size: 14px;
+        }
+
+        .item-carrinho p {
+            color: #d6b36a;
+            margin-top: 5px;
+        }
+
+        .item-carrinho button {
+            background: transparent;
+            border: 0;
+            color: #777;
+            cursor: pointer;
+        }
+
+        .rodape-carrinho {
+            border-top: 1px solid #292929;
+            padding-top: 20px;
+        }
+
+        .total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .total strong {
+            color: #d6b36a;
+        }
+
+        .finalizar {
+            width: 100%;
+            padding: 16px;
+            background: #d6b36a;
+            border: 0;
+            color: #111;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .produto.escondido {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            .menu {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-imagem {
+                height: 500px;
+            }
+
+            .lista-produtos {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .categorias {
+                grid-template-columns: 1fr;
+            }
+
+            .categorias div {
+                border-right: 0;
+                border-bottom: 1px solid #292929;
+                padding-bottom: 25px;
+            }
+
+            .titulo-secao {
+                align-items: start;
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .sobre {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            footer {
+                grid-template-columns: 1fr;
+            }
+
+            .redes,
+            .copyright {
+                justify-content: start;
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                padding: 0 5%;
+            }
+
+            .hero,
+            .produtos,
+            .sobre,
+            .newsletter {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .hero h1 {
+                font-size: 55px;
+            }
+
+            .hero-imagem {
+                height: 400px;
+            }
+
+            .lista-produtos {
+                grid-template-columns: 1fr;
+            }
+
+            .imagem-produto {
+                height: 450px;
+            }
+
+            .banner {
+                margin-left: 5%;
+                margin-right: 5%;
+                padding: 35px;
+            }
+
+            .banner h2 {
+                font-size: 40px;
+            }
+
+            .newsletter form {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .newsletter button {
+                padding: 15px;
+            }
+
+            .carrinho {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+
+        <a href="#inicio" class="logo">VÉRSE</a>
+
+        <nav class="menu">
+            <a href="#inicio">Início</a>
+            <a href="#produtos">Produtos</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#contato">Contato</a>
+        </nav>
+
+        <div class="acoes">
+            <button class="botao-pesquisa" onclick="abrirPesquisa()">⌕</button>
+
+            <button class="botao-carrinho" onclick="abrirCarrinho()">
+                🛒
+                <span id="contador">0</span>
+            </button>
+        </div>
+
+    </header>
+
+    <div class="barra-pesquisa" id="barraPesquisa">
+        <input
+            type="text"
+            id="pesquisa"
+            placeholder="Pesquisar produto..."
+            oninput="pesquisarProdutos()"
+        >
+
+        <button onclick="fecharPesquisa()">✕</button>
+    </div>
+
+    <main>
+
+        <section class="hero" id="inicio">
+
+            <div class="hero-conteudo">
+
+                <p class="pequeno-titulo">NOVA COLEÇÃO 2026</p>
+
+                <h1>
+                    Seu estilo.
+                    <br>
+                    <span>Sua identidade.</span>
+                </h1>
+
+                <p>
+                    Peças modernas para quem transforma
+                    personalidade em estilo.
+                </p>
+
+                <a href="#produtos" class="botao-principal">
+                    Comprar agora
+                </a>
+
+            </div>
+
+            <div class="hero-imagem">
+                <img
+                    src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1000&q=80"
+                    alt="Coleção de roupas"
+                >
+            </div>
+
+        </section>
+
+        <section class="categorias">
+
+            <div>
+                <span>01</span>
+                <h3>Qualidade</h3>
+                <p>Peças escolhidas para durar.</p>
+            </div>
+
+            <div>
+                <span>02</span>
+                <h3>Estilo</h3>
+                <p>Moda moderna e autêntica.</p>
+            </div>
+
+            <div>
+                <span>03</span>
+                <h3>Entrega</h3>
+                <p>Receba seus pedidos com segurança.</p>
+            </div>
+
+        </section>
+
+        <section class="produtos" id="produtos">
+
+            <div class="titulo-secao">
+
+                <div>
+                    <p>EXPLORE</p>
+                    <h2>Nossos produtos</h2>
+                </div>
+
+                <div class="filtros">
+
+                    <button class="filtro ativo" onclick="filtrar('todos', this)">
+                        Todos
+                    </button>
+
+                    <button class="filtro" onclick="filtrar('camisetas', this)">
+                        Camisetas
+                    </button>
+
+                    <button class="filtro" onclick="filtrar('calcas', this)">
+                        Calças
+                    </button>
+
+                    <button class="filtro" onclick="filtrar('moletons', this)">
+                        Moletons
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="lista-produtos" id="listaProdutos">
+
+                <article
+                    class="produto"
+                    data-categoria="camisetas"
+                    data-nome="Camiseta Essential"
+                >
+
+                    <div class="imagem-produto">
+
+                        <span class="tag">NOVO</span>
+
+                        <img
+                            src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80"
+                            alt="Camiseta Essential"
+                        >
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <div>
+                            <p class="categoria">CAMISETAS</p>
+                            <h3>Camiseta Essential</h3>
+                        </div>
+
+                        <strong>R$ 89,90</strong>
+
+                    </div>
+
+                    <button
+                        class="adicionar"
+                        onclick="adicionarCarrinho('Camiseta Essential', 89.90)"
+                    >
+                        Adicionar ao carrinho
+                    </button>
+
+                </article>
+
+                <article
+                    class="produto"
+                    data-categoria="camisetas"
+                    data-nome="Camiseta Oversized"
+                >
+
+                    <div class="imagem-produto">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=800&q=80"
+                            alt="Camiseta Oversized"
+                        >
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <div>
+                            <p class="categoria">CAMISETAS</p>
+                            <h3>Camiseta Oversized</h3>
+                        </div>
+
+                        <strong>R$ 109,90</strong>
+
+                    </div>
+
+                    <button
+                        class="adicionar"
+                        onclick="adicionarCarrinho('Camiseta Oversized', 109.90)"
+                    >
+                        Adicionar ao carrinho
+                    </button>
+
+                </article>
+
+                <article
+                    class="produto"
+                    data-categoria="calcas"
+                    data-nome="Calça Wide Leg"
+                >
+
+                    <div class="imagem-produto">
+
+                        <span class="tag">DESTAQUE</span>
+
+                        <img
+                            src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=800&q=80"
+                            alt="Calça Wide Leg"
+                        >
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <div>
+                            <p class="categoria">CALÇAS</p>
+                            <h3>Calça Wide Leg</h3>
+                        </div>
+
+                        <strong>R$ 179,90</strong>
+
+                    </div>
+
+                    <button
+                        class="adicionar"
+                        onclick="adicionarCarrinho('Calça Wide Leg', 179.90)"
+                    >
+                        Adicionar ao carrinho
+                    </button>
+
+                </article>
+
+                <article
+                    class="produto"
+                    data-categoria="calcas"
+                    data-nome="Calça Cargo"
+                >
+
+                    <div class="imagem-produto">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=800&q=80"
+                            alt="Calça Cargo"
+                        >
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <div>
+                            <p class="categoria">CALÇAS</p>
+                            <h3>Calça Cargo</h3>
+                        </div>
+
+                        <strong>R$ 189,90</strong>
+
+                    </div>
+
+                    <button
+                        class="adicionar"
+                        onclick="adicionarCarrinho('Calça Cargo', 189.90)"
+                    >
+                        Adicionar ao carrinho
+                    </button>
+
+                </article>
+
+                <article
+                    class="produto"
+                    data-categoria="moletons"
+                    data-nome="Moletom Premium"
+                >
+
+                    <div class="imagem-produto">
+
+                        <span class="tag">NOVO</span>
+
+                        <img
+                            src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80"
+                            alt="Moletom Premium"
+                        >
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <div>
+                            <p class="categoria">MOLETONS</p>
+                            <h3>Moletom Premium</h3>
+                        </div>
+
+                        <strong>R$ 199,90</strong>
+
+                    </div>
+
+                    <button
+                        class="adicionar"
+                        onclick="adicionarCarrinho('Moletom Premium', 199.90)"
+                    >
+                        Adicionar ao carrinho
+                    </button>
+
+                </article>
+
+                <article
+                    class="produto"
+                    data-categoria="moletons"
+                    data-nome="Moletom Urban"
+                >
+
+                    <div class="imagem-produto">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=800&q=80"
+                            alt="Moletom Urban"
+                        >
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <div>
+                            <p class="categoria">MOLETONS</p>
+                            <h3>Moletom Urban</h3>
+                        </div>
+
+                        <strong>R$ 219,90</strong>
+
+                    </div>
+
+                    <button
+                        class="adicionar"
+                        onclick="adicionarCarrinho('Moletom Urban', 219.90)"
+                    >
+                        Adicionar ao carrinho
+                    </button>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <section class="banner">
+
+            <div>
+
+                <p>VÉRSE ESSENTIALS</p>
+
+                <h2>
+                    Vista aquilo
+                    <br>
+                    que representa você.
+                </h2>
+
+                <a href="#produtos">
+                    Ver coleção
+                </a>
+
+            </div>
+
+        </section>
+
+        <section class="sobre" id="sobre">
+
+            <div>
+
+                <p class="pequeno-titulo">
+                    SOBRE A VÉRSE
+                </p>
+
+                <h2>
+                    Moda feita para
+                    <br>
+                    expressar você.
+                </h2>
+
+            </div>
+
+            <p>
+                A VÉRSE nasceu para unir conforto, qualidade
+                e estilo em peças que combinam com diferentes
+                personalidades. Nossa proposta é criar uma
+                experiência de moda simples, moderna e marcante.
+            </p>
+
+        </section>
+
+        <section class="newsletter" id="contato">
+
+            <p>FIQUE POR DENTRO</p>
+
+            <h2>
+                Receba novidades da VÉRSE.
+            </h2>
+
+            <form onsubmit="inscrever(event)">
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Seu melhor e-mail"
+                    required
+                >
+
+                <button type="submit">
+                    Cadastrar
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <footer>
+
+        <div>
+            <h2>VÉRSE</h2>
+            <p>Moda, estilo e identidade.</p>
+        </div>
+
+        <div class="redes">
+            <a href="#">Instagram</a>
+            <a href="#">TikTok</a>
+            <a href="#">WhatsApp</a>
+        </div>
+
+        <p class="copyright">
+            © 2026 VÉRSE. Todos os direitos reservados.
+        </p>
+
+    </footer>
+
+    <div
+        class="carrinho-fundo"
+        id="carrinhoFundo"
+        onclick="fecharCarrinho()"
+    ></div>
+
+    <aside class="carrinho" id="carrinho">
+
+        <div class="cabecalho-carrinho">
+
+            <div>
+                <p>SEU PEDIDO</p>
+                <h2>Carrinho</h2>
+            </div>
+
+            <button onclick="fecharCarrinho()">
+                ✕
+            </button>
+
+        </div>
+
+        <div class="itens-carrinho" id="itensCarrinho">
+
+            <p class="carrinho-vazio">
+                Seu carrinho está vazio.
+            </p>
+
+        </div>
+
+        <div class="rodape-carrinho">
+
+            <div class="total">
+
+                <span>Total</span>
+
+                <strong id="total">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+            <button
+                class="finalizar"
+                onclick="finalizarCompra()"
+            >
+                Finalizar compra
+            </button>
+
+        </div>
+
+    </aside>
+
+    <script>
+        let carrinho = [];
+
+        function abrirPesquisa() {
+            document
+                .getElementById("barraPesquisa")
+                .classList.add("ativa");
+
+            document
+                .getElementById("pesquisa")
+                .focus();
+        }
+
+        function fecharPesquisa() {
+            document
+                .getElementById("barraPesquisa")
+                .classList.remove("ativa");
+
+            document.getElementById("pesquisa").value = "";
+
+            pesquisarProdutos();
+        }
+
+        function pesquisarProdutos() {
+            const texto = document
+                .getElementById("pesquisa")
+                .value
+                .toLowerCase();
+
+            const produtos = document.querySelectorAll(".produto");
+
+            produtos.forEach(produto => {
+                const nome = produto.dataset.nome.toLowerCase();
+
+                if (nome.includes(texto)) {
+                    produto.classList.remove("escondido");
+                } else {
+                    produto.classList.add("escondido");
+                }
+            });
+        }
+
+        function filtrar(categoria, botao) {
+            const produtos = document.querySelectorAll(".produto");
+            const botoes = document.querySelectorAll(".filtro");
+
+            botoes.forEach(item => {
+                item.classList.remove("ativo");
+            });
+
+            botao.classList.add("ativo");
+
+            produtos.forEach(produto => {
+                if (
+                    categoria === "todos" ||
+                    produto.dataset.categoria === categoria
+                ) {
+                    produto.classList.remove("escondido");
+                } else {
+                    produto.classList.add("escondido");
+                }
+            });
+        }
+
+        function adicionarCarrinho(nome, preco) {
+            const produtoExistente = carrinho.find(
+                item => item.nome === nome
+            );
+
+            if (produtoExistente) {
+                produtoExistente.quantidade++;
+            } else {
+                carrinho.push({
+                    nome: nome,
+                    preco: preco,
+                    quantidade: 1
+                });
+            }
+
+            atualizarCarrinho();
+            abrirCarrinho();
+        }
+
+        function removerCarrinho(index) {
+            carrinho.splice(index, 1);
+            atualizarCarrinho();
+        }
+
+        function atualizarCarrinho() {
+            const itens = document.getElementById("itensCarrinho");
+            const contador = document.getElementById("contador");
+            const totalElemento = document.getElementById("total");
+
+            let quantidadeTotal = 0;
+            let valorTotal = 0;
+
+            carrinho.forEach(item => {
+                quantidadeTotal += item.quantidade;
+                valorTotal += item.preco * item.quantidade;
+            });
+
+            contador.textContent = quantidadeTotal;
+
+            totalElemento.textContent =
+                valorTotal.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL"
+                });
+
+            if (carrinho.length === 0) {
+                itens.innerHTML =
+                    '<p class="carrinho-vazio">Seu carrinho está vazio.</p>';
+
+                return;
+            }
+
+            itens.innerHTML = "";
+
+            carrinho.forEach((item, index) => {
+
+                const div = document.createElement("div");
+
+                div.className = "item-carrinho";
+
+                div.innerHTML = `
+                    <div>
+                        <h3>${item.nome}</h3>
+                        <p>
+                            ${item.quantidade}x
+                            ${item.preco.toLocaleString("pt-BR", {
+                                style: "currency",
+                                currency: "BRL"
+                            })}
+                        </p>
+                    </div>
+
+                    <button onclick="removerCarrinho(${index})">
+                        Remover
+                    </button>
+                `;
+
+                itens.appendChild(div);
+            });
+        }
+
+        function abrirCarrinho() {
+            document
+                .getElementById("carrinho")
+                .classList.add("aberto");
+
+            document
+                .getElementById("carrinhoFundo")
+                .classList.add("aberto");
+        }
+
+        function fecharCarrinho() {
+            document
+                .getElementById("carrinho")
+                .classList.remove("aberto");
+
+            document
+                .getElementById("carrinhoFundo")
+                .classList.remove("aberto");
+        }
+
+        function finalizarCompra() {
+            if (carrinho.length === 0) {
+                alert("Seu carrinho está vazio.");
+                return;
+            }
+
+            alert(
+                "Compra iniciada! Obrigado por comprar na VÉRSE."
+            );
+        }
+
+        function inscrever(event) {
+            event.preventDefault();
+
+            const email =
+                document.getElementById("email").value;
+
+            alert(
+                "E-mail " +
+                email +
+                " cadastrado com sucesso!"
+            );
+
+            document.getElementById("email").value = "";
+        }
+    </script>
+
+</body>
+</html>

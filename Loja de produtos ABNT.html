@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHOPLY - Sua loja online</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #090909;
+            color: #f5f5f5;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .header {
+            height: 70px;
+            padding: 0 4%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #292929;
+            background: #090909;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 25px;
+            letter-spacing: 6px;
+            color: #e8bb68;
+            font-weight: 600;
+        }
+
+        .menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .menu a {
+            color: #bcbcbc;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+
+        .menu a:hover {
+            color: #e8bb68;
+        }
+
+        .acoes {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .pesquisa {
+            width: 235px;
+            height: 38px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background: #111;
+            color: white;
+            padding: 0 14px;
+            outline: none;
+        }
+
+        .pesquisa:focus {
+            border-color: #e8bb68;
+        }
+
+        .icone {
+            background: transparent;
+            border: 0;
+            color: white;
+            font-size: 21px;
+            position: relative;
+        }
+
+        .contador {
+            position: absolute;
+            top: -9px;
+            right: -10px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #e8bb68;
+            color: #111;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .hero {
+            min-height: 500px;
+            padding: 65px 5%;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background:
+                linear-gradient(90deg, #050505 15%, rgba(5,5,5,0.78), rgba(5,5,5,0.15)),
+                url("https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1600&q=85") center/cover;
+        }
+
+        .hero-conteudo {
+            max-width: 540px;
+        }
+
+        .hero-conteudo small {
+            color: #e8bb68;
+            letter-spacing: 4px;
+            font-size: 11px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(48px, 6vw, 75px);
+            line-height: 1;
+            font-weight: 500;
+            margin: 20px 0;
+        }
+
+        .hero h1 span {
+            color: #e8bb68;
+        }
+
+        .hero p {
+            color: #aaa;
+            line-height: 1.7;
+            margin-bottom: 28px;
+            max-width: 450px;
+        }
+
+        .botao {
+            display: inline-block;
+            background: #e8bb68;
+            color: #111;
+            padding: 14px 24px;
+            border: 0;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .botao:hover {
+            background: #f5d38d;
+            transform: translateY(-2px);
+        }
+
+        .beneficios {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-bottom: 1px solid #292929;
+            border-top: 1px solid #292929;
+        }
+
+        .beneficio {
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-right: 1px solid #292929;
+        }
+
+        .beneficio:last-child {
+            border-right: 0;
+        }
+
+        .beneficio .icone-beneficio {
+            font-size: 27px;
+            color: #e8bb68;
+        }
+
+        .beneficio h3 {
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .beneficio p {
+            color: #777;
+            font-size: 11px;
+        }
+
+        .loja {
+            padding: 65px 4%;
+            display: grid;
+            grid-template-columns: 190px 1fr 260px;
+            gap: 25px;
+        }
+
+        .categorias {
+            border: 1px solid #292929;
+            height: max-content;
+        }
+
+        .categorias h3 {
+            font-size: 13px;
+            padding: 18px;
+            border-bottom: 1px solid #292929;
+        }
+
+        .categoria {
+            display: block;
+            width: 100%;
+            padding: 13px 17px;
+            border: 0;
+            background: transparent;
+            color: #aaa;
+            text-align: left;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+
+        .categoria:hover,
+        .categoria.ativa {
+            background: #1b1b1b;
+            color: #e8bb68;
+        }
+
+        .produtos-topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .produtos-topo h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 29px;
+            font-weight: 500;
+        }
+
+        .ver-todos {
+            color: #e8bb68;
+            font-size: 12px;
+            background: none;
+            border: 0;
+        }
+
+        .produtos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .produto {
+            border: 1px solid #292929;
+            background: #101010;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .produto:hover {
+            border-color: #555;
+            transform: translateY(-3px);
+        }
+
+        .produto.escondido {
+            display: none;
+        }
+
+        .produto-imagem {
+            height: 220px;
+            background: #181818;
+            overflow: hidden;
+        }
+
+        .produto-imagem img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.4s;
+        }
+
+        .produto:hover img {
+            transform: scale(1.05);
+        }
+
+        .produto-info {
+            padding: 14px;
+        }
+
+        .produto-info h3 {
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .estrelas {
+            color: #e8bb68;
+            font-size: 11px;
+        }
+
+        .avaliacoes {
+            color: #777;
+            font-size: 10px;
+        }
+
+        .preco {
+            display: block;
+            color: white;
+            font-size: 16px;
+            margin: 8px 0 12px;
+        }
+
+        .adicionar {
+            width: 100%;
+            border: 0;
+            background: #e8bb68;
+            color: #111;
+            padding: 11px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .adicionar:hover {
+            background: #f5d38d;
+        }
+
+        .ofertas {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .oferta {
+            height: 145px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            background-position: center;
+            background-size: cover;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .oferta::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.62);
+        }
+
+        .oferta-conteudo {
+            position: relative;
+            z-index: 1;
+        }
+
+        .oferta h3 {
+            font-size: 17px;
+            margin-bottom: 7px;
+        }
+
+        .oferta strong {
+            color: #e8bb68;
+            font-size: 21px;
+        }
+
+        .oferta a {
+            display: block;
+            color: #ddd;
+            font-size: 10px;
+            margin-top: 10px;
+        }
+
+        .oferta:nth-child(1) {
+            background-image: url("https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=700&q=80");
+        }
+
+        .oferta:nth-child(2) {
+            background-image: url("https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80");
+        }
+
+        .oferta:nth-child(3) {
+            background-image: url("https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=700&q=80");
+        }
+
+        .newsletter {
+            padding: 30px 7%;
+            border-top: 1px solid #292929;
+            border-bottom: 1px solid #292929;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .newsletter-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .newsletter-info span {
+            color: #e8bb68;
+            font-size: 32px;
+        }
+
+        .newsletter h3 {
+            font-size: 14px;
+        }
+
+        .newsletter p {
+            color: #777;
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        .newsletter form {
+            display: flex;
+            width: 430px;
+        }
+
+        .newsletter input {
+            flex: 1;
+            background: #111;
+            border: 1px solid #333;
+            padding: 13px;
+            color: white;
+            outline: none;
+        }
+
+        .newsletter button {
+            width: 130px;
+            border: 0;
+            background: #e8bb68;
+            font-weight: bold;
+            font-size: 10px;
+        }
+
+        footer {
+            padding: 45px 4% 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        footer h2 {
+            color: #e8bb68;
+            letter-spacing: 5px;
+            font-size: 22px;
+        }
+
+        footer p {
+            color: #777;
+            font-size: 12px;
+            margin-top: 12px;
+        }
+
+        footer h3 {
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        footer a {
+            display: block;
+            color: #777;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        footer a:hover {
+            color: #e8bb68;
+        }
+
+        .pagamentos {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .pagamento {
+            border: 1px solid #333;
+            padding: 8px 12px;
+            font-size: 10px;
+            color: #aaa;
+        }
+
+        .direitos {
+            grid-column: 1 / -1;
+            border-top: 1px solid #292929;
+            padding-top: 18px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .carrinho-fundo {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
+            z-index: 1999;
+        }
+
+        .carrinho-fundo.aberto {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .carrinho {
+            position: fixed;
+            right: -430px;
+            top: 0;
+            width: 410px;
+            max-width: 100%;
+            height: 100vh;
+            background: #111;
+            border-left: 1px solid #333;
+            z-index: 2000;
+            transition: 0.4s;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .carrinho.aberto {
+            right: 0;
+        }
+
+        .carrinho-topo {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+        }
+
+        .carrinho-topo h2 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 500;
+        }
+
+        .fechar {
+            background: transparent;
+            color: white;
+            border: 0;
+            font-size: 20px;
+        }
+
+        .itens {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #292929;
+        }
+
+        .item h3 {
+            font-size: 13px;
+        }
+
+        .item p {
+            color: #e8bb68;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .remover {
+            background: transparent;
+            border: 0;
+            color: #777;
+            font-size: 11px;
+        }
+
+        .carrinho-vazio {
+            color: #777;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .carrinho-final {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+        }
+
+        .total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .total strong {
+            color: #e8bb68;
+        }
+
+        .finalizar {
+            width: 100%;
+            padding: 15px;
+            border: 0;
+            background: #e8bb68;
+            color: #111;
+            font-weight: bold;
+        }
+
+        @media (max-width: 1000px) {
+            .loja {
+                grid-template-columns: 170px 1fr;
+            }
+
+            .ofertas {
+                display: none;
+            }
+
+            .produtos {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .beneficios {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .header {
+                padding: 0 5%;
+            }
+
+            .menu {
+                display: none;
+            }
+
+            .pesquisa {
+                width: 150px;
+            }
+
+            .hero {
+                min-height: 600px;
+                padding: 50px 7%;
+            }
+
+            .loja {
+                grid-template-columns: 1fr;
+                padding: 45px 5%;
+            }
+
+            .categorias {
+                display: flex;
+                overflow-x: auto;
+            }
+
+            .categoria {
+                min-width: 120px;
+            }
+
+            .produtos {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .beneficios {
+                grid-template-columns: 1fr;
+            }
+
+            .beneficio {
+                border-right: 0;
+                border-bottom: 1px solid #292929;
+            }
+
+            .newsletter {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .newsletter form {
+                width: 100%;
+            }
+
+            footer {
+                grid-template-columns: 1fr;
+            }
+
+            .direitos {
+                grid-column: auto;
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .acoes {
+                gap: 8px;
+            }
+
+            .pesquisa {
+                width: 120px;
+            }
+
+            .produtos {
+                grid-template-columns: 1fr;
+            }
+
+            .produto-imagem {
+                height: 300px;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .newsletter form {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .newsletter button {
+                width: 100%;
+                padding: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+
+        <a href="#" class="logo">SHOPLY</a>
+
+        <nav class="menu">
+            <a href="#inicio">Início</a>
+            <a href="#produtos">Categorias</a>
+            <a href="#ofertas">Ofertas</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#contato">Contato</a>
+        </nav>
+
+        <div class="acoes">
+
+            <input
+                class="pesquisa"
+                id="pesquisa"
+                type="text"
+                placeholder="O que você procura?"
+                oninput="pesquisar()"
+            >
+
+            <button class="icone">♙</button>
+
+            <button class="icone" onclick="abrirCarrinho()">
+                🛒
+                <span class="contador" id="contador">0</span>
+            </button>
+
+        </div>
+
+    </header>
+
+    <main>
+
+        <section class="hero" id="inicio">
+
+            <div class="hero-conteudo">
+
+                <small>TUDO O QUE VOCÊ PRECISA</small>
+
+                <h1>
+                    Qualidade e
+                    <br>
+                    praticidade em
+                    <br>
+                    <span>um só lugar.</span>
+                </h1>
+
+                <p>
+                    Encontre eletrônicos, moda, casa, esportes
+                    e muito mais com ofertas especiais e entrega
+                    rápida.
+                </p>
+
+                <a href="#produtos" class="botao">
+                    COMPRAR AGORA →
+                </a>
+
+            </div>
+
+        </section>
+
+        <section class="beneficios">
+
+            <div class="beneficio">
+                <span class="icone-beneficio">🚚</span>
+                <div>
+                    <h3>Entrega rápida</h3>
+                    <p>Para todo o Brasil</p>
+                </div>
+            </div>
+
+            <div class="beneficio">
+                <span class="icone-beneficio">🛡</span>
+                <div>
+                    <h3>Compra segura</h3>
+                    <p>Seus dados protegidos</p>
+                </div>
+            </div>
+
+            <div class="beneficio">
+                <span class="icone-beneficio">▣</span>
+                <div>
+                    <h3>Pagamento fácil</h3>
+                    <p>Cartão, Pix e boleto</p>
+                </div>
+            </div>
+
+            <div class="beneficio">
+                <span class="icone-beneficio">♧</span>
+                <div>
+                    <h3>Atendimento</h3>
+                    <p>Suporte rápido</p>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="loja" id="produtos">
+
+            <aside class="categorias">
+
+                <h3>CATEGORIAS</h3>
+
+                <button class="categoria ativa" onclick="filtrar('todos', this)">
+                    ◈ &nbsp; Todos
+                </button>
+
+                <button class="categoria" onclick="filtrar('eletronicos', this)">
+                    ▣ &nbsp; Eletrônicos
+                </button>
+
+                <button class="categoria" onclick="filtrar('celulares', this)">
+                    ▯ &nbsp; Celulares
+                </button>
+
+                <button class="categoria" onclick="filtrar('informatica', this)">
+                    ▱ &nbsp; Informática
+                </button>
+
+                <button class="categoria" onclick="filtrar('casa', this)">
+                    ⌂ &nbsp; Casa
+                </button>
+
+                <button class="categoria" onclick="filtrar('moda', this)">
+                    ♧ &nbsp; Moda
+                </button>
+
+                <button class="categoria" onclick="filtrar('esportes', this)">
+                    ◉ &nbsp; Esportes
+                </button>
+
+            </aside>
+
+            <div>
+
+                <div class="produtos-topo">
+                    <h2>Produtos em destaque</h2>
+                    <button class="ver-todos" onclick="filtrarTodos()">
+                        Ver todos →
+                    </button>
+                </div>
+
+                <div class="produtos">
+
+                    <article
+                        class="produto"
+                        data-categoria="eletronicos"
+                        data-nome="Headphone Bluetooth"
+                    >
+
+                        <div class="produto-imagem">
+                            <img
+                                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80"
+                                alt="Headphone Bluetooth"
+                            >
+                        </div>
+
+                        <div class="produto-info">
+                            <h3>Headphone Bluetooth</h3>
+                            <span class="estrelas">★★★★★</span>
+                            <span class="avaliacoes">(124)</span>
+                            <strong class="preco">R$ 299,90</strong>
+
+                            <button
+                                class="adicionar"
+                                onclick="adicionar('Headphone Bluetooth', 299.90)"
+                            >
+                                ADICIONAR AO CARRINHO
+                            </button>
+                        </div>
+
+                    </article>
+
+                    <article
+                        class="produto"
+                        data-categoria="celulares"
+                        data-nome="iPhone 15 128GB"
+                    >
+
+                        <div class="produto-imagem">
+                            <img
+                                src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=800&q=80"
+                                alt="iPhone"
+                            >
+                        </div>
+
+                        <div class="produto-info">
+                            <h3>iPhone 15 128GB</h3>
+                            <span class="estrelas">★★★★★</span>
+                            <span class="avaliacoes">(98)</span>
+                            <strong class="preco">R$ 5.499,90</strong>
+
+                            <button
+                                class="adicionar"
+                                onclick="adicionar('iPhone 15 128GB', 5499.90)"
+                            >
+                                ADICIONAR AO CARRINHO
+                            </button>
+                        </div>
+
+                    </article>
+
+                    <article
+                        class="produto"
+                        data-categoria="eletronicos"
+                        data-nome="Smartwatch Pro"
+                    >
+
+                        <div class="produto-imagem">
+                            <img
+                                src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=800&q=80"
+                                alt="Smartwatch"
+                            >
+                        </div>
+
+                        <div class="produto-info">
+                            <h3>Smartwatch Pro</h3>
+                            <span class="estrelas">★★★★★</span>
+                            <span class="avaliacoes">(76)</span>
+                            <strong class="preco">R$ 499,90</strong>
+
+                            <button
+                                class="adicionar"
+                                onclick="adicionar('Smartwatch Pro', 499.90)"
+                            >
+                                ADICIONAR AO CARRINHO
+                            </button>
+                        </div>
+
+                    </article>
+
+                    <article
+                        class="produto"
+                        data-categoria="esportes"
+                        data-nome="Tênis Casual"
+                    >
+
+                        <div class="produto-imagem">
+                            <img
+                                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80"
+                                alt="Tênis Casual"
+                            >
+                        </div>
+
+                        <div class="produto-info">
+                            <h3>Tênis Casual</h3>
+                            <span class="estrelas">★★★★★</span>
+                            <span class="avaliacoes">(42)</span>
+                            <strong class="preco">R$ 249,90</strong>
+
+                            <button
+                                class="adicionar"
+                                onclick="adicionar('Tênis Casual', 249.90)"
+                            >
+                                ADICIONAR AO CARRINHO
+                            </button>
+                        </div>
+
+                    </article>
+
+                    <article
+                        class="produto"
+                        data-categoria="moda"
+                        data-nome="Mochila Executiva"
+                    >
+
+                        <div class="produto-imagem">
+                            <img
+                                src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80"
+                                alt="Mochila"
+                            >
+                        </div>
+
+                        <div class="produto-info">
+                            <h3>Mochila Executiva</h3>
+                            <span class="estrelas">★★★★★</span>
+                            <span class="avaliacoes">(60)</span>
+                            <strong class="preco">R$ 199,90</strong>
+
+                            <button
+                                class="adicionar"
+                                onclick="adicionar('Mochila Executiva', 199.90)"
+                            >
+                                ADICIONAR AO CARRINHO
+                            </button>
+                        </div>
+
+                    </article>
+
+                    <article
+                        class="produto"
+                        data-categoria="casa"
+                        data-nome="Air Fryer 4L"
+                    >
+
+                        <div class="produto-imagem">
+                            <img
+                                src="https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=800&q=80"
+                                alt="Air Fryer"
+                            >
+                        </div>
+
+                        <div class="produto-info">
+                            <h3>Air Fryer 4L</h3>
+                            <span class="estrelas">★★★★★</span>
+                            <span class="avaliacoes">(33)</span>
+                            <strong class="preco">R$ 399,90</strong>
+
+                            <button
+                                class="adicionar"
+                                onclick="adicionar('Air Fryer 4L', 399.90)"
+                            >
+                                ADICIONAR AO CARRINHO
+                            </button>
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+            <aside class="ofertas" id="ofertas">
+
+                <div class="oferta">
+
+                    <div class="oferta-conteudo">
+                        <h3>Smartphones</h3>
+                        <strong>30% OFF</strong>
+                        <a href="#produtos">Ver oferta →</a>
+                    </div>
+
+                </div>
+
+                <div class="oferta">
+
+                    <div class="oferta-conteudo">
+                        <h3>Tênis</h3>
+                        <strong>40% OFF</strong>
+                        <a href="#produtos">Ver oferta →</a>
+                    </div>
+
+                </div>
+
+                <div class="oferta">
+
+                    <div class="oferta-conteudo">
+                        <h3>Casa e decoração</h3>
+                        <strong>50% OFF</strong>
+                        <a href="#produtos">Ver oferta →</a>
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </section>
+
+        <section class="newsletter" id="contato">
+
+            <div class="newsletter-info">
+
+                <span>✈</span>
+
+                <div>
+                    <h3>Receba novidades e ofertas exclusivas</h3>
+                    <p>Cadastre-se e fique por dentro de tudo!</p>
+                </div>
+
+            </div>
+
+            <form onsubmit="cadastrar(event)">
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Seu e-mail aqui"
+                    required
+                >
+
+                <button type="submit">
+                    INSCREVER
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <footer id="sobre">
+
+        <div>
+            <h2>SHOPLY</h2>
+            <p>Moda. Tecnologia. Casa. Você.</p>
+        </div>
+
+        <div>
+            <h3>Links</h3>
+            <a href="#inicio">Início</a>
+            <a href="#produtos">Categorias</a>
+            <a href="#ofertas">Ofertas</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#contato">Contato</a>
+        </div>
+
+        <div>
+
+            <h3>Formas de pagamento</h3>
+
+            <div class="pagamentos">
+                <span class="pagamento">VISA</span>
+                <span class="pagamento">MASTERCARD</span>
+                <span class="pagamento">PIX</span>
+                <span class="pagamento">BOLETO</span>
+            </div>
+
+        </div>
+
+        <div class="direitos">
+
+            <span>© 2026 Shoply. Todos os direitos reservados.</span>
+
+            <span>
+                Termos de uso &nbsp; | &nbsp; Política de privacidade
+            </span>
+
+        </div>
+
+    </footer>
+
+    <div
+        class="carrinho-fundo"
+        id="carrinhoFundo"
+        onclick="fecharCarrinho()"
+    ></div>
+
+    <aside class="carrinho" id="carrinho">
+
+        <div class="carrinho-topo">
+
+            <h2>Seu carrinho</h2>
+
+            <button
+                class="fechar"
+                onclick="fecharCarrinho()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+        <div class="itens" id="itens">
+
+            <p class="carrinho-vazio">
+                Seu carrinho está vazio.
+            </p>
+
+        </div>
+
+        <div class="carrinho-final">
+
+            <div class="total">
+                <span>Subtotal</span>
+                <strong id="total">R$ 0,00</strong>
+            </div>
+
+            <button
+                class="finalizar"
+                onclick="finalizar()"
+            >
+                FINALIZAR COMPRA →
+            </button>
+
+        </div>
+
+    </aside>
+
+    <script>
+        let carrinho = [];
+
+        function adicionar(nome, preco) {
+            const produto = carrinho.find(item => item.nome === nome);
+
+            if (produto) {
+                produto.quantidade++;
+            } else {
+                carrinho.push({
+                    nome: nome,
+                    preco: preco,
+                    quantidade: 1
+                });
+            }
+
+            atualizarCarrinho();
+            abrirCarrinho();
+        }
+
+        function remover(index) {
+            carrinho.splice(index, 1);
+            atualizarCarrinho();
+        }
+
+        function atualizarCarrinho() {
+            const itens = document.getElementById("itens");
+            const contador = document.getElementById("contador");
+            const total = document.getElementById("total");
+
+            let quantidade = 0;
+            let valor = 0;
+
+            carrinho.forEach(item => {
+                quantidade += item.quantidade;
+                valor += item.preco * item.quantidade;
+            });
+
+            contador.textContent = quantidade;
+
+            total.textContent = valor.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL"
+            });
+
+            if (carrinho.length === 0) {
+                itens.innerHTML = `
+                    <p class="carrinho-vazio">
+                        Seu carrinho está vazio.
+                    </p>
+                `;
+
+                return;
+            }
+
+            itens.innerHTML = "";
+
+            carrinho.forEach((item, index) => {
+
+                const elemento = document.createElement("div");
+
+                elemento.className = "item";
+
+                elemento.innerHTML = `
+                    <div>
+                        <h3>${item.nome}</h3>
+                        <p>
+                            ${item.quantidade}x
+                            ${item.preco.toLocaleString("pt-BR", {
+                                style: "currency",
+                                currency: "BRL"
+                            })}
+                        </p>
+                    </div>
+
+                    <button
+                        class="remover"
+                        onclick="remover(${index})"
+                    >
+                        Remover
+                    </button>
+                `;
+
+                itens.appendChild(elemento);
+            });
+        }
+
+        function abrirCarrinho() {
+            document
+                .getElementById("carrinho")
+                .classList.add("aberto");
+
+            document
+                .getElementById("carrinhoFundo")
+                .classList.add("aberto");
+        }
+
+        function fecharCarrinho() {
+            document
+                .getElementById("carrinho")
+                .classList.remove("aberto");
+
+            document
+                .getElementById("carrinhoFundo")
+                .classList.remove("aberto");
+        }
+
+        function filtrar(categoria, botao) {
+            const produtos = document.querySelectorAll(".produto");
+            const botoes = document.querySelectorAll(".categoria");
+
+            botoes.forEach(item => {
+                item.classList.remove("ativa");
+            });
+
+            botao.classList.add("ativa");
+
+            produtos.forEach(produto => {
+
+                if (
+                    categoria === "todos" ||
+                    produto.dataset.categoria === categoria
+                ) {
+                    produto.classList.remove("escondido");
+                } else {
+                    produto.classList.add("escondido");
+                }
+
+            });
+        }
+
+        function filtrarTodos() {
+            const produtos = document.querySelectorAll(".produto");
+            const botoes = document.querySelectorAll(".categoria");
+
+            botoes.forEach(item => {
+                item.classList.remove("ativa");
+            });
+
+            botoes[0].classList.add("ativa");
+
+            produtos.forEach(produto => {
+                produto.classList.remove("escondido");
+            });
+        }
+
+        function pesquisar() {
+            const texto = document
+                .getElementById("pesquisa")
+                .value
+                .toLowerCase();
+
+            const produtos = document.querySelectorAll(".produto");
+
+            produtos.forEach(produto => {
+
+                const nome = produto.dataset.nome.toLowerCase();
+
+                if (nome.includes(texto)) {
+                    produto.classList.remove("escondido");
+                } else {
+                    produto.classList.add("escondido");
+                }
+
+            });
+        }
+
+        function cadastrar(event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value;
+
+            alert(
+                "E-mail " +
+                email +
+                " cadastrado com sucesso!"
+            );
+
+            document.getElementById("email").value = "";
+        }
+
+        function finalizar() {
+            if (carrinho.length === 0) {
+                alert("Seu carrinho está vazio.");
+                return;
+            }
+
+            alert(
+                "Pedido iniciado com sucesso! Obrigado por comprar na SHOPLY."
+            );
+        }
+    </script>
+
+</body>
+
+</html>

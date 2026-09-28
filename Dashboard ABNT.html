@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Executivo</title>
+    <!-- Ícones via Boxicons para elementos visuais da interface -->
+    <link href="https://unpkg.com" rel="stylesheet">
+    
+    <style>
+        /* CONFIGURAÇÕES GERAIS E VARIÁVEIS */
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-surface: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --color-primary: #3b82f6;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* BARRA LATERAL (SIDEBAR) */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-secondary);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            position: fixed;
+            height: 100vh;
+            border-right: 1px solid #2d3748;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--color-primary);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background-color: var(--color-primary);
+            color: var(--text-main);
+        }
+
+        .menu-item i {
+            font-size: 1.25rem;
+        }
+
+        /* CONTEÚDO PRINCIPAL */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
+            padding: 2rem;
+        }
+
+        /* CABEÇALHO */
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            width: 300px;
+            gap: 0.5rem;
+        }
+
+        .search-bar i {
+            color: var(--text-muted);
+        }
+
+        .search-bar input {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            outline: none;
+            width: 100%;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .icon-bell {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: var(--color-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* GRIDS DE CARDS */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .card {
+            background-color: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .card-icon.blue { background-color: rgba(59, 130, 246, 0.1); color: var(--color-primary); }
+        .card-icon.green { background-color: rgba(16, 185, 129, 0.1); color: var(--color-success); }
+        .card-icon.orange { background-color: rgba(245, 158, 11, 0.1); color: var(--color-warning); }
+
+        .card-data h3 {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-trend {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .card-trend.positive { color: var(--color-success); }
+        .card-trend.negative { color: var(--color-danger); }
+
+        /* TABELA */
+        .table-container {
+            background-color: var(--bg-secondary);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .table-header h2 {
+            font-size: 1.1rem;
+        }
+
+        .btn-view-all {
+            background: none;
+            border: 1px solid var(--text-muted);
+            color: var(--text-main);
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.35rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background 0.2s;
+        }
+
+        .btn-view-all:hover {
+            background-color: var(--bg-surface);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .data-table th, .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #2d3748;
+            font-size: 0.9rem;
+        }
+
+        .data-table th {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-success { background-color: rgba(16, 185, 129, 0.15); color: var(--color-success); }
+        .status-pending { background-color: rgba(245, 158, 11, 0.15); color: var(--color-warning); }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; padding: 1rem; }
+            .main-content { margin-left: 0; width: 100%; padding: 1rem; }
+            .search-bar { width: 150px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA LATERAL (SIDEBAR) -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="bx bx-layer logo-icon"></i>
+            <h2>DashCorp</h2>
+        </div>
+        <nav class="sidebar-menu">
+            <a href="#" class="menu-item active"><i class="bx bx-grid-alt"></i> Dashboard</a>
+            <a href="#" class="menu-item"><i class="bx bx-bar-chart-alt-2"></i> Analytics</a>
+            <a href="#" class="menu-item"><i class="bx bx-wallet"></i> Vendas</a>
+            <a href="#" class="menu-item"><i class="bx bx-user"></i> Clientes</a>
+            <a href="#" class="menu-item"><i class="bx bx-cog"></i> Configurações</a>
+        </nav>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+        
+        <!-- CABEÇALHO (HEADER) -->
+        <header class="main-header">
+            <div class="search-bar">
+                <i class="bx bx-search"></i>
+                <input type="text" placeholder="Pesquisar...">
+            </div>
+            <div class="user-profile">
+                <i class="bx bx-bell icon-bell"></i>
+                <div class="user-info">
+                    <span class="user-name">Alex Silva</span>
+                    <span class="user-role">Administrador</span>
+                </div>
+                <div class="user-avatar">AS</div>
+            </div>
+        </header>
+
+        <!-- ÁREA DOS CARDS DE ESTATÍSTICA -->
+        <section class="cards-grid">
+            <div class="card">
+                <div class="card-icon blue"><i class="bx bx-dollar-circle"></i></div>
+                <div class="card-data">
+                    <h3>Faturamento</h3>
+                    <p class="card-value">R$ 45.230,00</p>
+                    <span class="card-trend positive"><i class="bx bx-trending-up"></i> +12.5%</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon green"><i class="bx bx-shopping-bag"></i></div>
+                <div class="card-data">
+                    <h3>Vendas</h3>
+                    <p class="card-value">+340</p>
+                    <span class="card-trend positive"><i class="bx bx-trending-up"></i> +8.2%</span>
+                </div>
+            </div>
